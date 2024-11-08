@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "ms-azuretools.vscode-docker",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "rvest.vs-code-prettier-eslint",
+    "bradlc.vscode-tailwindcss",
+    "Prisma.prisma",
+    "GraphQL.vscode-graphql-syntax",
+    "heybourn.headwind",
+    "attilabuti.vscode-mjml"
+  ]
+}
