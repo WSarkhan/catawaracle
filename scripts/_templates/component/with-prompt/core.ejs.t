@@ -1,5 +1,5 @@
 ---
-to: src/components/<%=atomic%>s/<%=name%>/<%=name%>.tsx
+to: ./components/<%=atomic%>s/<%=name%>/<%=name%>.tsx
 ---
 import { View } from 'react-native';
 
