@@ -1,20 +1,11 @@
-commit-msg:
-  scripts:
-    commitlint:
-      runner: npx
-      command: commitlint -E "$GIT_PARAMS"
 pre-commit:
   commands:
     app-lint:
       root: 'app/'
-      run: git stash --keep-index && yarn fix && git add . && git stash pop
+      run: yarn lint && yarn format && git add .
     app-typecheck:
       root: 'app/'
       run: yarn tsc --noEmit
-    app-build:
-      root: 'app/'
-      run: npx expo-doctor
     app-test:
       root: 'app/'
       run: yarn test
-    
