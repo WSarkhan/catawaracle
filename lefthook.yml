@@ -1,0 +1,11 @@
+pre-commit:
+  commands:
+    app-lint:
+      root: 'app/'
+      run: yarn lint && yarn format && git add .
+    app-typecheck:
+      root: 'app/'
+      run: yarn tsc --noEmit
+    app-test:
+      root: 'app/'
+      run: yarn test
