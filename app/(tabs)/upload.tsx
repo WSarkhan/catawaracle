@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, ScrollView } from 'react-native';
 import { Button, Catawaracle, CustomAlert } from '@/components/atoms';
 import { useImageManager } from '@/hooks/useImageManager';
+import { CatImage, CatImageUri } from '@/types';
 
 export default function Upload() {
   const [alertVisible, setAlertVisible] = useState(false);
@@ -17,6 +18,10 @@ export default function Upload() {
   const { uploadedImages, loading, pickImageAndUpload, handleDeleteImage } =
     useImageManager(showCustomAlert);
 
+  const isCatImageUri = (image: CatImage): image is CatImageUri => {
+    return 'uri' in image;
+  };
+
   return (
     <View className="flex h-full p-5 bg-gray-950">
       <Catawaracle />
@@ -24,8 +29,10 @@ export default function Upload() {
         {uploadedImages.map((image) => (
           <View key={image.id} className="flex items-center mb-5">
             <Image
-              alt={`uploaded image ${image.uri}`}
-              source={{ uri: image.uri }}
+              alt={`uploaded image ${
+                isCatImageUri(image) ? image.uri : image.url
+              }`}
+              source={{ uri: isCatImageUri(image) ? image.uri : image.url }}
               className="w-[300px] h-[300px] mb-5 border-2 border-orange-500 rounded-lg"
             />
             <View className="flex flex-row w-[300px] gap-5">

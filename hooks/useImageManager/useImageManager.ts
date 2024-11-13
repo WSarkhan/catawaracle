@@ -1,3 +1,4 @@
+import { CatImage } from '@/types';
 import {
   deleteImageFromAPI,
   loadSavedImages,
@@ -6,11 +7,6 @@ import {
 } from '@/utils';
 import * as ImagePicker from 'expo-image-picker';
 import { useState, useEffect } from 'react';
-
-export interface CatImage {
-  id: string;
-  uri: string;
-}
 
 export const useImageManager = (
   showCustomAlert: (title: string, message: string) => void,
