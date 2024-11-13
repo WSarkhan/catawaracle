@@ -2,7 +2,7 @@
 
 exports[`Catawaracle should match a snapshot 1`] = `
 <View
-  className="flex flex-row pt-5"
+  className="flex flex-row py-5"
 >
   <Text
     className="text-3xl font-bold text-orange-500 "
