@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomAlert should match a snapshot 1`] = `
+<Modal
+  animationType="fade"
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={true}
+>
+  <View
+    className="items-center justify-center flex-1 bg-black/50"
+  >
+    <View
+      className="w-4/5 p-5 bg-white rounded-lg shadow-md"
+    >
+      <Text
+        className="text-lg font-bold text-gray-800"
+      >
+        Title
+      </Text>
+      <Text
+        className="mt-2 text-sm text-gray-600"
+      >
+        Message
+      </Text>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <Text
+          className="font-medium text-center text-white"
+        >
+          OK
+        </Text>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
