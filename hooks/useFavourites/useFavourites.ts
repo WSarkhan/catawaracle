@@ -1,32 +1,53 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { CAT_API_KEY } from '@env';
 
-interface UseFavoritesProps {
-  showCustomAlert: (title: string, message: string) => void;
-}
+export const useFavorites = (
+  showCustomAlert: (title: string, message: string) => void,
+) => {
+  const [favorites, setFavorites] = useState<Record<string, string | null>>({});
+  const [loadingImage, setLoadingImage] = useState<string | null>(null);
 
-export const useFavorites = ({ showCustomAlert }: UseFavoritesProps) => {
-  const [favorites, setFavorites] = useState<Record<string, string | null>>({}); // Map of image IDs to favorite IDs
-  const [loading, setLoading] = useState(false);
+  const fetchFavorites = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        'https://api.thecatapi.com/v1/favourites',
+        {
+          headers: { 'x-api-key': CAT_API_KEY },
+        },
+      );
+      const updatedFavorites = response.data.reduce(
+        (
+          acc: Record<string, string>,
+          fav: { id: string; image_id: string },
+        ) => {
+          acc[fav.image_id] = fav.id;
+          return acc;
+        },
+        {},
+      );
+      setFavorites(updatedFavorites);
+    } catch {
+      showCustomAlert('Error', 'Failed to fetch favorites');
+    }
+  }, [showCustomAlert]);
 
   const toggleFavorite = useCallback(
     async (imageId: string) => {
       const favoriteId = favorites[imageId];
-      setLoading(true);
-
+      setLoadingImage(imageId);
       try {
         if (favoriteId) {
-          // Unfavorite the image
           await axios.delete(
             `https://api.thecatapi.com/v1/favourites/${favoriteId}`,
-            {
-              headers: { 'x-api-key': CAT_API_KEY },
-            },
+            { headers: { 'x-api-key': CAT_API_KEY } },
           );
-          setFavorites((prev) => ({ ...prev, [imageId]: null }));
+          setFavorites((prev) => {
+            const updated = { ...prev };
+            delete updated[imageId];
+            return updated;
+          });
         } else {
-          // Favorite the image
           const response = await axios.post(
             'https://api.thecatapi.com/v1/favourites',
             { image_id: imageId },
@@ -39,19 +60,18 @@ export const useFavorites = ({ showCustomAlert }: UseFavoritesProps) => {
           );
           setFavorites((prev) => ({ ...prev, [imageId]: response.data.id }));
         }
-      } catch (error) {
-        showCustomAlert(
-          'Error',
-          favoriteId
-            ? 'Failed to unfavorite the image. Please try again.'
-            : 'Failed to favorite the image. Please try again.',
-        );
+      } catch {
+        showCustomAlert('Error', 'Failed to toggle favorite');
       } finally {
-        setLoading(false);
+        setLoadingImage(null);
       }
     },
     [favorites, showCustomAlert],
   );
 
-  return { favorites, loading, toggleFavorite };
+  useEffect(() => {
+    fetchFavorites();
+  }, [fetchFavorites]);
+
+  return { favorites, toggleFavorite, loadingImage };
 };

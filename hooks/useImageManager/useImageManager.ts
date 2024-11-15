@@ -1,10 +1,7 @@
+import { deleteImage, uploadImage } from '@/api';
 import { CatImage } from '@/types';
-import {
-  deleteImageFromAPI,
-  loadSavedImages,
-  saveImages,
-  uploadImage,
-} from '@/utils';
+import { loadSavedImages } from '@/utils/loadSavedImages/loadSavedImages';
+import { saveImages } from '@/utils/saveImages/saveImages';
 import * as ImagePicker from 'expo-image-picker';
 import { useState, useEffect } from 'react';
 
@@ -46,10 +43,10 @@ export const useImageManager = (
     }
   };
 
-  const handleUploadImage = async (imageUri: string) => {
+  const handleUploadImage = async (imageUrl: string) => {
     setLoading(true);
     try {
-      const newImage = await uploadImage(imageUri);
+      const newImage = await uploadImage(imageUrl);
       const updatedImages = [newImage, ...uploadedImages];
       setUploadedImages(updatedImages);
       await saveImages(updatedImages);
@@ -64,7 +61,7 @@ export const useImageManager = (
   const handleDeleteImage = async (imageId: string) => {
     setLoading(true);
     try {
-      await deleteImageFromAPI(imageId);
+      await deleteImage(imageId);
       const updatedImages = uploadedImages.filter((img) => img.id !== imageId);
       setUploadedImages(updatedImages);
       await saveImages(updatedImages);
@@ -88,5 +85,6 @@ export const useImageManager = (
     handleUploadImage,
     handleDeleteImage,
     resetState,
+    setUploadedImages,
   };
 };
