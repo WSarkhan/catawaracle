@@ -1,34 +1,41 @@
-import { useState, useEffect } from 'react';
-import { CAT_API_KEY } from '@env';
-import { Alert } from 'react-native';
-import { CatImage } from '@/types';
+import { useEffect, useState } from 'react';
+import { fetchCatImages, fetchVotes } from '@/api';
+import { CatImage, Votes } from '@/types';
 
-export const useCatImages = () => {
-  const [catImages, setCatImages] = useState<CatImage[]>([]);
-  const [loading, setLoading] = useState(true);
+interface MappedCatImage extends CatImage {
+  votes: number;
+}
 
-  const fetchCatImages = async () => {
+interface UseCatImagesReturn {
+  catImages: MappedCatImage[];
+  loading: boolean;
+  setCatImages: React.Dispatch<React.SetStateAction<MappedCatImage[]>>;
+}
+
+export const useCatImages = (): UseCatImagesReturn => {
+  const [catImages, setCatImages] = useState<MappedCatImage[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const loadCatImages = async (): Promise<void> => {
     try {
-      const response = await fetch(
-        'https://api.thecatapi.com/v1/images/search?limit=10',
-        {
-          headers: {
-            'x-api-key': CAT_API_KEY || '',
-          },
-        },
-      );
-      const data: CatImage[] = await response.json();
-      setCatImages(data);
+      setLoading(true);
+      const images: CatImage[] = await fetchCatImages();
+      const votes: Votes[] = await fetchVotes();
+      const mappedImages: MappedCatImage[] = images.map((image) => ({
+        ...image,
+        votes: votes.filter((vote) => vote.image_id === image.id).length,
+      }));
+      setCatImages(mappedImages);
     } catch (error) {
-      Alert.alert('Error', 'Failed to fetch cat images');
+      throw new Error('Failed to fetch cat images');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCatImages();
+    loadCatImages();
   }, []);
 
-  return { catImages, loading, fetchCatImages };
+  return { catImages, loading, setCatImages };
 };

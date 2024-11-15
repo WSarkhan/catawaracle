@@ -1,4 +1,4 @@
-import { Cross, Home, Favourites } from '@/components/foundations';
+import { Cross, Home } from '@/components/foundations';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
@@ -28,13 +28,6 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <Home color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="favourites"
-        options={{
-          title: 'Favourites',
-          tabBarIcon: ({ color }) => <Favourites color={color} />,
         }}
       />
       <Tabs.Screen

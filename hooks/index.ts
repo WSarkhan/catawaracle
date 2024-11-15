@@ -1,3 +1,4 @@
 export * from './useCatImages';
-export * from './useImageManager';
+export * from './useVotes';
 export * from './useFavourites';
+export * from './useImageManager';
