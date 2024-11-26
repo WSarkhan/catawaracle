@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
-import { CAT_API_KEY } from '@env';
+
+const secret_key = process.env.EXPO_PUBLIC_CAT_API_KEY;
 
 export const useFavorites = (
   showCustomAlert: (title: string, message: string) => void,
@@ -13,7 +14,7 @@ export const useFavorites = (
       const response = await axios.get(
         'https://api.thecatapi.com/v1/favourites',
         {
-          headers: { 'x-api-key': CAT_API_KEY },
+          headers: { 'x-api-key': secret_key },
         },
       );
       const updatedFavorites = response.data.reduce(
@@ -40,7 +41,7 @@ export const useFavorites = (
         if (favoriteId) {
           await axios.delete(
             `https://api.thecatapi.com/v1/favourites/${favoriteId}`,
-            { headers: { 'x-api-key': CAT_API_KEY } },
+            { headers: { 'x-api-key': secret_key } },
           );
           setFavorites((prev) => {
             const updated = { ...prev };
@@ -53,7 +54,7 @@ export const useFavorites = (
             { image_id: imageId },
             {
               headers: {
-                'x-api-key': CAT_API_KEY,
+                'x-api-key': secret_key,
                 'Content-Type': 'application/json',
               },
             },
