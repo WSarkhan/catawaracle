@@ -4,14 +4,12 @@ Welcome to Catawaracle, an Expo-based application.
 
 This project allows users to browse, vote, favorite, and upload cat images.
 
-
 ## Table of Contents
 
 - [Project Overview](#project-overview)
 - [Installation](#installation)
 - [Running the Project](#running-the-project)
 - [Tests](#tests)
-
 
 ## Project Overview
 
@@ -41,25 +39,32 @@ Before starting please make sure you have setup the appropriate software on your
    git clone https://github.com/wsarkhan/catawaracle.git
    cd catawaracle
 
+   ```
+
 2. Install dependencies:
 
    ```bash
    yarn install
 
+   ```
+
 3. Create a .env file in the root folder with the cat API key:
    ```bash
-   CAT_API_KEY=your_secret_key
+   EXPO_PUBLIC_CAT_API_KEY=your_secret_key
+   ```
 
 ## Running the Project
+
 To start the application, use the following command:
 
-   ```
-yarn start 
-   ```
+```
+yarn start
+```
 
 In the output, you'll find options to open the app in a:
 
 development build
+
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
