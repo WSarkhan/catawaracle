@@ -38,7 +38,7 @@ Before starting please make sure you have setup the appropriate software on your
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/catawaracle.git
+   git clone https://github.com/wsarkhan/catawaracle.git
    cd catawaracle
 
 2. Install dependencies:
