@@ -46,6 +46,10 @@ Before starting please make sure you have setup the appropriate software on your
    ```bash
    yarn install
 
+3. Create a .env file in the root folder with the cat API key:
+   ```bash
+   CAT_API_KEY=your_secret_key
+
 ## Running the Project
 To start the application, use the following command:
 
